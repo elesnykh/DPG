@@ -1,24 +1,25 @@
-import smtplib #библиотека почтового протокола
+import smtplib
 import os
 
-mail = open('mail.txt') #шаблон письма
-mail_text=mail.read()
-mail.close()
+with open('mail.txt') as mail:
+    mail_text=mail.read()
 
-from_mail='evglesnykh@yandex.ru' 
+
+from_mail='evglesnykh@yandex.ru'
 to_mail="civilpost@gmail.com"
 subj='Приглашение на курс'
 
-#редактируем шаблон в переменной
-new_mail=mail_text.replace('%website%','dvmn.org') 
+
+new_mail=mail_text.replace('%website%','dvmn.org')
 new_mail=new_mail.replace('%friend_name%','Евдот')
 new_mail=new_mail.replace('%my_name%','Евгений')
-msg = ("From: {}\r\nTo: {}\r\nSubject: {}\r\n\r\n".format(from_mail, "".join(to_mail), "".join(subj))) #добавляем от кого куда и тему
+msg = ("From: {}\r\nTo: {}\r\nSubject: {}\r\n\r\n".format(from_mail,\
+    to_mail, subj))
 
 new_mail=msg + new_mail
-new_mail=new_mail.encode("utf-8") #перекодируем для отправки
+new_mail=new_mail.encode("utf-8")
 
-login=os.getenv("LOGIN") #подгружаем пароль и логин из .env
+login=os.getenv("LOGIN")
 passw=os.getenv("PASSWORD")
 
 server = smtplib.SMTP_SSL('smtp.yandex.ru:465')
