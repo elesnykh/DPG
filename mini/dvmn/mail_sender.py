@@ -13,8 +13,11 @@ subj='Приглашение на курс'
 new_mail=mail_text.replace('%website%','dvmn.org')
 new_mail=new_mail.replace('%friend_name%','Евдот')
 new_mail=new_mail.replace('%my_name%','Евгений')
-msg = ("From: {}\r\nTo: {}\r\nSubject: {}\r\n\r\n".format(from_mail,\
-    to_mail, subj))
+msg = ("\
+From: {}\r\n\
+To: {}\r\n\
+Subject: {}\r\n\r\n\
+".format(from_mail, to_mail, subj))
 
 new_mail=msg + new_mail
 new_mail=new_mail.encode("utf-8")
