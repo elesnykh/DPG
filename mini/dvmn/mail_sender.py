@@ -5,12 +5,12 @@ with open('mail.txt') as mail:
     mail_text=mail.read()
 
 
-from_mail='evglesnykh@yandex.ru'
-to_mail="civilpost@gmail.com"
+from_mail='mail@yandex.ru'
+to_mail="mail@gmail.com"
 subj='Приглашение на курс'
 
 
-new_mail=mail_text.replace('%website%','dvmn.org')
+new_mail=mail_text.replace('%website%','site.org')
 new_mail=new_mail.replace('%friend_name%','Евдот')
 new_mail=new_mail.replace('%my_name%','Евгений')
 msg = ("\
