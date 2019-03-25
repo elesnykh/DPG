@@ -13,7 +13,13 @@ def timeout():
 
 
 def notify_progress(secs_left, message_id, total):
-    bot.update_message(user_id, message_id, "Осталось {} секунд\n".format(secs_left) + render_progressbar(total, total-secs_left))
+    progressbar = render_progressbar(total, total-secs_left)
+    progress_message = "Осталось {} секунд\n {}"
+    bot.update_message(
+        user_id,
+        message_id,
+        progress_message.format(secs_left, progressbar) 
+    )
   
   
 def render_progressbar(total, iteration, prefix='', suffix='', length=18, fill='█', zfill='░'):
@@ -26,12 +32,16 @@ def render_progressbar(total, iteration, prefix='', suffix='', length=18, fill='
 
 
 def reply(text):
-   timer = parse(text)
-   message = "Таймер запущен на {} секунд".format(timer)
-   bot.send_message(user_id, message)
-   current_id = bot.send_message(user_id, "Осталось {} секунд\n".format(timer) + render_progressbar(timer, 0))
-   bot.create_timer(timer, timeout)
-   bot.create_countdown(timer, notify_progress, message_id= current_id, total=timer)
+    timer = parse(text)
+    message = "Таймер запущен на {} секунд"
+    bot.send_message(user_id, message.format(timer))
+    timer_message = "Осталось {} секунд\n {}"
+    current_id = bot.send_message(
+        user_id, 
+        timer_message.format(timer, render_progressbar(timer, 0))  
+    )
+    bot.create_timer(timer, timeout)
+    bot.create_countdown(timer, notify_progress, message_id= current_id, total=timer)
   
 
 bot.wait_for_msg(reply)
